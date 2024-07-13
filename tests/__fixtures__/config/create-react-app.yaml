@@ -1,0 +1,4 @@
+default:
+  appsLocation: ./tests/__fixtures__/react-apps
+  port: 7575
+  host: localhost
