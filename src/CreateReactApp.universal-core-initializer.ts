@@ -40,7 +40,11 @@ export default class CreateReactAppInitializer extends CoreInitializer {
 
     core.developer.terminalPresenter.startProgressIncreaseSimulation(28, 90000)
 
-    this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({ command: 'npx', args: ['create-react-app', this.reactAppName], workingDirectory: './tmp' })
+    this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
+      command: 'npx',
+      args: ['create-react-app', this.reactAppName, ...(this.typescript ? ['--template', 'typescript'] : [])],
+      workingDirectory: './tmp'
+    })
     await this.currentSubProcess.run()
 
     core.developer.terminalPresenter.finishProgressIncreaseSimulation()
@@ -106,6 +110,14 @@ export default class CreateReactAppInitializer extends CoreInitializer {
       `${this.sourceLocation}/react-apps/${this.reactAppName}/package.json`,
       JSON.stringify({ name: this.reactAppName, private: true, browserslist: generatedReactAppPackageJson.browserslist }, null, 2)
     )
+
+    if (this.typescript) {
+      this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
+        command: 'cp',
+        args: [`./tmp/${this.reactAppName}/tsconfig.json`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
+      })
+      await this.currentSubProcess.run()
+    }
 
     core.developer.terminalPresenter.increaseProgressPercentageBy(5)
 
