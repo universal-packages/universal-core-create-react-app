@@ -1,7 +1,6 @@
 import { CoreInitializer } from '@universal-packages/core'
 import { Logger } from '@universal-packages/logger'
 import { SubProcess } from '@universal-packages/sub-process'
-import fs from 'fs'
 
 import { DEFAULT_NAME } from './DEFAULT_NAME'
 import { LOG_CONFIGURATION } from './LOG_CONFIGURATION'
@@ -38,7 +37,7 @@ export default class CreateReactAppInitializer extends CoreInitializer {
       LOG_CONFIGURATION
     )
 
-    core.developer.terminalPresenter.startProgressIncreaseSimulation(28, 90000)
+    core.developer.terminalPresenter.startProgressIncreaseSimulation(78, 90000)
 
     this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
       command: 'npx',
@@ -59,65 +58,19 @@ export default class CreateReactAppInitializer extends CoreInitializer {
     if (this.stopping) return
 
     this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
-      command: 'rsync',
-      args: ['-av', `./tmp/${this.reactAppName}/src`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
+      command: 'rm',
+      args: ['-rf', `./tmp/${this.reactAppName}/.git`]
     })
     await this.currentSubProcess.run()
     this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
       command: 'rsync',
-      args: ['-av', `./tmp/${this.reactAppName}/public`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
+      args: ['-av', `./tmp/${this.reactAppName}`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
     })
     await this.currentSubProcess.run()
-
-    if (this.stopping) return
-
-    core.developer.terminalPresenter.startProgressIncreaseSimulation(40, 30000)
-
-    const generatedReactAppPackageJson = JSON.parse(fs.readFileSync(`./tmp/${this.reactAppName}/package.json`, 'utf8'))
-
-    this.logger.log(
-      { level: 'INFO', title: 'Installing cra dependencies', message: 'Installing cra-dependencies into the universal core project', category: 'REACT' },
-      LOG_CONFIGURATION
-    )
-
-    const developmentDependencies = Object.keys(generatedReactAppPackageJson.devDependencies || []).map(
-      (dependency) => `${dependency}@${generatedReactAppPackageJson.devDependencies[dependency].replace('^', '')}`
-    )
-
-    Object.keys(generatedReactAppPackageJson.dependencies).forEach((dependency) => {
-      if (dependency.includes('testing')) developmentDependencies.push(`${dependency}@${generatedReactAppPackageJson.dependencies[dependency].replace('^', '')}`)
-    })
-
-    const dependencies = Object.keys(generatedReactAppPackageJson.dependencies).map(
-      (dependency) => `${dependency}@${generatedReactAppPackageJson.dependencies[dependency].replace('^', '')}`
-    )
-
-    this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({ command: 'npm', args: ['install', '--save-dev', '--force', ...developmentDependencies] })
-    await this.currentSubProcess.run()
-
-    if (this.stopping) return
-
-    this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({ command: 'npm', args: ['install', '--save', '--force', ...dependencies] })
-    await this.currentSubProcess.run()
-
-    core.developer.terminalPresenter.finishProgressIncreaseSimulation()
 
     if (this.stopping) return
 
     this.logger.log({ level: 'INFO', title: 'Finishing up...', message: 'Finishing up the create-react-app reconfiguration', category: 'REACT' }, LOG_CONFIGURATION)
-
-    fs.writeFileSync(
-      `${this.sourceLocation}/react-apps/${this.reactAppName}/package.json`,
-      JSON.stringify({ name: this.reactAppName, private: true, browserslist: generatedReactAppPackageJson.browserslist }, null, 2)
-    )
-
-    if (this.typescript) {
-      this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
-        command: 'cp',
-        args: [`./tmp/${this.reactAppName}/tsconfig.json`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
-      })
-      await this.currentSubProcess.run()
-    }
 
     core.developer.terminalPresenter.increaseProgressPercentageBy(5)
 

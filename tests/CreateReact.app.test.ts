@@ -13,7 +13,7 @@ coreJest.runApp('create-react-app', {
 describe(CreateReactApp, (): void => {
   it('behaves as expected', async (): Promise<void> => {
     expect(SubProcess).toHaveRun({
-      command: '../../../node_modules/.bin/react-scripts',
+      command: 'npm',
       args: ['start'],
       env: { APPS_LOCATION: './tests/__fixtures__/react-apps', HOST: 'localhost', PORT: 7575 }
     })

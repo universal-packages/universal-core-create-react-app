@@ -37,7 +37,7 @@ export default class CreateReactApp extends CoreApp {
     }, {})
 
     this.reactScriptsSubProcess = new SubProcess({
-      command: '../../../node_modules/.bin/react-scripts',
+      command: 'npm',
       args: ['start'],
       env: reactAppEnvironmentVariables,
       workingDirectory: `${this.config.appsLocation}/${this.reactAppName}`
