@@ -17,7 +17,7 @@ export default class CreateReactApp extends CoreApp {
 
   async prepare() {
     this.existentReactApps = this.getDirectoryNamesFromPath(this.config.appsLocation)
-    this.reactAppName = this.args.reactAppName || DEFAULT_NAME
+    this.reactAppName = this.args.name || DEFAULT_NAME
   }
 
   public async run(): Promise<void> {
@@ -25,7 +25,7 @@ export default class CreateReactApp extends CoreApp {
       if (this.existentReactApps.length === 0) {
         throw new Error(`No apps found in ${this.config.appsLocation}`)
       } else {
-        throw new Error(`The react app ${this.args.reactAppName} does not exist\n Available apps: ${this.existentReactApps.join(', ')}`)
+        throw new Error(`The react app ${this.reactAppName} does not exist\n Available apps: ${this.existentReactApps.join(', ')}`)
       }
     }
 

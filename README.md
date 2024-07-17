@@ -17,7 +17,7 @@ npm install @universal-packages/core-create-react-app
 This will create a new react app using `create-react-app` and install the core packages as well as adapting the resulting app to use the core abstraction.
 
 ```shell
-ucore initialize create-react-app --reactAppName my-app
+ucore initialize create-react-app --name my-app
 ```
 
 ## Development
@@ -25,7 +25,7 @@ ucore initialize create-react-app --reactAppName my-app
 Instead of running `npm start` you use the `ucore run` command to start the development server of you react app, you can have multiple apps initialized in the same project and run them individually.
 
 ```shell
-ucore run create-react-app --reactAppName my-app
+ucore run create-react-app --name my-app
 ```
 
 ### Environment Variables
