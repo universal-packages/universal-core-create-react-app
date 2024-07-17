@@ -64,7 +64,7 @@ export default class CreateReactAppInitializer extends CoreInitializer {
     await this.currentSubProcess.run()
     this.currentSubProcess = core.developer.terminalPresenter.setSubProcess({
       command: 'rsync',
-      args: ['-av', `./tmp/${this.reactAppName}`, `${this.sourceLocation}/react-apps/${this.reactAppName}`]
+      args: ['-av', `./tmp/${this.reactAppName}`, `${this.sourceLocation}/react-apps`]
     })
     await this.currentSubProcess.run()
 
