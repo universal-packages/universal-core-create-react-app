@@ -38,7 +38,13 @@ export default class CreateReactApp extends CoreApp {
       return acc
     }, {})
 
-    this.reactScriptsSubProcess = new SubProcess({
+    await core.developer.terminalPresenter.runSubProcess({
+      command: 'npm',
+      args: ['install'],
+      workingDirectory: `${this.config.appsLocation}/${this.reactAppName}`
+    })
+
+    this.reactScriptsSubProcess = core.developer.terminalPresenter.setSubProcess({
       command: 'npm',
       args: ['start'],
       env: reactAppEnvironmentVariables,
