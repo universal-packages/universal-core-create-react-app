@@ -10,6 +10,8 @@ export default class CreateReactApp extends CoreApp {
   public static readonly appName = 'create-react-app'
   public static readonly description = 'Create React App core app wrapper for development'
   public static readonly allowAppWatch = false
+  public static readonly allowLoadModules = false
+  public static readonly allowLoadEnvironments = false
 
   private reactScriptsSubProcess: SubProcess
   private existentReactApps: string[]
