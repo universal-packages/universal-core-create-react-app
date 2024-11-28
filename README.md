@@ -1,6 +1,6 @@
 # Core Create Rect App
 
-[![npm version](https://badge.fury.io/js/@universal-packages%2Fcore-storage.svg)](https://www.npmjs.com/package/@universal-packages/core-create-react-app)
+[![npm version](https://badge.fury.io/js/@universal-packages%2Fcore-create-react-app.svg)](https://www.npmjs.com/package/@universal-packages/core-create-react-app)
 [![Testing](https://github.com/universal-packages/universal-core-create-react-app/actions/workflows/testing.yml/badge.svg)](https://github.com/universal-packages/universal-core-create-react-app/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/universal-packages/universal-core-create-react-app/branch/main/graph/badge.svg?token=CXPJSN8IGL)](https://codecov.io/gh/universal-packages/universal-core-create-react-app)
 
